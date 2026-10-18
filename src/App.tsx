@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { SelectedWork } from './components/SelectedWork';
@@ -6,10 +6,14 @@ import { InteractiveLab } from './components/InteractiveLab';
 import { StorySection } from './components/StorySection';
 import { ContactSection } from './components/ContactSection';
 import { FloatingDock } from './components/FloatingDock';
-import { CredentialsDrawer } from './components/CredentialsDrawer';
 import { BackgroundCanvas } from './components/BackgroundCanvas';
 import { CustomCursor } from './components/CustomCursor';
 import { Toast } from './components/Toast';
+
+// Code-split heavy modal drawer
+const CredentialsDrawer = lazy(() =>
+  import('./components/CredentialsDrawer').then((m) => ({ default: m.CredentialsDrawer }))
+);
 
 export function App() {
   const [isDark, setIsDark] = useState<boolean>(true);
@@ -78,7 +82,7 @@ export function App() {
           {/* Flagship Systems: Interactive Production Stats & Architecture Topology */}
           <SelectedWork />
 
-          {/* Guardrails Concurrency Sandbox */}
+          {/* Architecture Blueprint Inspector */}
           <InteractiveLab />
 
           {/* The Story Trajectory */}
@@ -99,11 +103,15 @@ export function App() {
         onOpenCredentials={() => setIsCredentialsOpen(true)}
       />
 
-      {/* Credentials Slide-Over Drawer */}
-      <CredentialsDrawer
-        isOpen={isCredentialsOpen}
-        onClose={() => setIsCredentialsOpen(false)}
-      />
+      {/* Lazy-Loaded Credentials Slide-Over Drawer */}
+      {isCredentialsOpen && (
+        <Suspense fallback={null}>
+          <CredentialsDrawer
+            isOpen={isCredentialsOpen}
+            onClose={() => setIsCredentialsOpen(false)}
+          />
+        </Suspense>
+      )}
 
       {/* Toast Notification */}
       <Toast

@@ -292,9 +292,9 @@ export const Hero: React.FC = () => {
                     {getIcon(activePerspective.id)}
                   </div>
                   <div>
-                    <h3 className="text-sm sm:text-base md:text-lg font-bold text-slate-950 dark:text-white">
+                    <h2 className="text-sm sm:text-base md:text-lg font-bold text-slate-950 dark:text-white">
                       {activePerspective.title}
-                    </h3>
+                    </h2>
                     <p className="text-[11px] sm:text-xs font-mono text-indigo-600 dark:text-indigo-400">
                       {activePerspective.tagline}
                     </p>

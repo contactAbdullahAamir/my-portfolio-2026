@@ -86,6 +86,8 @@ export const FloatingDock: React.FC<FloatingDockProps> = ({
                 playClick();
                 setActiveSection(item.id);
               }}
+              aria-label={item.label}
+              title={item.label}
               className={`relative flex items-center gap-1 px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-full text-xs font-mono transition-all duration-200 cursor-pointer ${
                 isActive
                   ? 'text-indigo-600 dark:text-white font-bold'
